@@ -1,0 +1,373 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Flower Shop</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#fff5f7;
+color:#333;
+}
+
+/* NAVBAR */
+
+header{
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+position:sticky;
+top:0;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 60px;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+color:#e91e63;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+}
+
+nav ul li{
+margin-left:25px;
+}
+
+nav ul li a{
+text-decoration:none;
+color:#333;
+font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+height:85vh;
+background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),
+url("https://images.unsplash.com/photo-1490750967868-88aa4486c946");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white;
+}
+
+.hero h1{
+font-size:55px;
+}
+
+.hero p{
+margin-top:10px;
+font-size:20px;
+}
+
+.hero button{
+margin-top:20px;
+padding:12px 30px;
+background:#e91e63;
+border:none;
+color:white;
+font-size:16px;
+cursor:pointer;
+border-radius:5px;
+}
+
+/* SECTION */
+
+section{
+padding:70px 10%;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:40px;
+color:#e91e63;
+}
+
+/* ABOUT */
+
+.about{
+display:flex;
+gap:40px;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.about img{
+width:400px;
+border-radius:10px;
+}
+
+/* SHOP */
+
+.shop{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:white;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+overflow:hidden;
+text-align:center;
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.card h3{
+margin:10px 0;
+}
+
+.price{
+color:#e91e63;
+font-weight:bold;
+}
+
+.card button{
+margin:10px 0 15px;
+padding:10px 20px;
+border:none;
+background:#e91e63;
+color:white;
+cursor:pointer;
+border-radius:5px;
+}
+
+/* GALLERY */
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+.gallery img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+}
+
+/* CONTACT */
+
+.contact{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+flex-wrap:wrap;
+}
+
+form input, form textarea{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+form button{
+padding:12px 25px;
+background:#e91e63;
+border:none;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+background:#e91e63;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+@media(max-width:768px){
+
+.about{
+flex-direction:column;
+}
+
+.contact{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<nav>
+<div class="logo">Bloom Flowers</div>
+
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#shop">Shop</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div>
+<h1>Fresh Flower Bouquets</h1>
+<p>Beautiful flowers for every occasion</p>
+<button onclick="document.getElementById('shop').scrollIntoView()">Shop Now</button>
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<h2 class="section-title">About Our Flower Shop</h2>
+
+<div class="about">
+
+<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
+
+<p>
+Welcome to Bloom Flowers. We design modern and elegant flower bouquets for birthdays, weddings, anniversaries and special celebrations.  
+Our flowers are fresh and handcrafted by expert florists.
+</p>
+
+</div>
+
+</section>
+
+<!-- SHOP -->
+
+<section id="shop">
+
+<h2 class="section-title">Popular Bouquets</h2>
+
+<div class="shop">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9">
+<h3>Rose Bouquet</h3>
+<p class="price">$25</p>
+<button onclick="alert('Order placed!')">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1496065187959-7f07b8353c55">
+<h3>Wedding Bouquet</h3>
+<p class="price">$40</p>
+<button onclick="alert('Order placed!')">Order Now</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6">
+<h3>Birthday Flowers</h3>
+<p class="price">$30</p>
+<button onclick="alert('Order placed!')">Order Now</button>
+</div>
+
+</div>
+
+</section>
+
+<!-- GALLERY -->
+
+<section id="gallery">
+
+<h2 class="section-title">Flower Gallery</h2>
+
+<div class="gallery">
+
+<img src="https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0">
+<img src="https://images.unsplash.com/photo-1464983953574-0892a716854b">
+<img src="https://images.unsplash.com/photo-1493666438817-866a91353ca9">
+<img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d">
+
+</div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<h2 class="section-title">Contact Us</h2>
+
+<div class="contact">
+
+<form>
+
+<input type="text" placeholder="Your Name" required>
+<input type="email" placeholder="Your Email" required>
+<textarea rows="5" placeholder="Your Message"></textarea>
+
+<button>Send Message</button>
+
+</form>
+
+<div>
+
+<h3>Our Shop Location 📍</h3>
+<p>Butwal Flower Market<br>Butwal, Nepal</p>
+
+<br>
+
+<iframe
+src="https://maps.google.com/maps?q=butwal&t=&z=13&ie=UTF8&iwloc=&output=embed"
+width="100%"
+height="250"
+style="border:0;">
+</iframe>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>© 2026 Bloom Flowers | Flower Bouquet Business Website</p>
+
+</footer>
+
+</body>
+</html>
+```
