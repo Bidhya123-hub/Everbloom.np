@@ -156,20 +156,19 @@
   <input type="text" id="search" placeholder="Search flower...">
   <select id="filter">
     <option value="all">All Types</option>
-    <option value="Lily">Lily</option>
     <option value="Rose">Rose</option>
-    <option value="Lotus">Lotus</option>
-    <option value="Sunflower">Sunflower</option>
-    <option value="Tulip">Tulip</option>
-    <option value="Orchid">Orchid</option>
-    <option value="Marigold">Marigold</option>
-    <option value="Daisy">Daisy</option>
-    <option value="Peony">Peony</option>
+    <option value="Hydrangea">Hydrangea</option>
+    <option value="Cherry Blossom">Cherry Blossom</option>
+    <option value="Calla Lily">Calla Lily</option>
+    <option value="Carnation">Carnation</option>
+    <option value="Gerbera">Gerbera</option>
+    <option value="Lavender">Lavender</option>
+    <option value="Iris">Iris</option>
+    <option value="Poppy">Poppy</option>
   </select>
 </div>
 
 <div class="products" id="product-list">
-  <!-- Product Cards Injected By JavaScript -->
 </div>
 
 <!-- Cart Sidebar -->
@@ -193,24 +192,24 @@
 </div>
 
 <script>
-// 🌸 Flower Products Data
+// 🌸 Flower Products Data (All unique)
 const products = [
-  {id:1, name:"Lily Bouquet", price:499, type:"Lily", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Fresh artificial lilies, perfect for home decoration."},
-  {id:2, name:"Rose Bundle", price:799, type:"Rose", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Red artificial roses to brighten your day."},
-  {id:3, name:"Lotus Arrangement", price:899, type:"Lotus", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Beautiful lotus flowers for your meditation space."},
-  {id:4, name:"Sunflower Set", price:399, type:"Sunflower", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Bright sunflowers to bring sunshine indoors."},
-  {id:5, name:"Tulip Mix", price:599, type:"Tulip", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Colorful tulip mix, perfect for gifting."},
-  {id:6, name:"Orchid Pack", price:1200, type:"Orchid", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Elegant orchids for office or home."},
-  {id:7, name:"Marigold Garland", price:350, type:"Marigold", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Festive marigold garland for celebrations."},
-  {id:8, name:"Daisy Cluster", price:450, type:"Daisy", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Cheerful daisies to brighten your room."},
-  {id:9, name:"Peony Deluxe", price:1500, type:"Peony", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Luxurious peonies for special occasions."}
+  {id:1, name:"Rainbow Rose Bouquet", price:1299, type:"Rose", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"A vibrant bouquet of multicolored artificial roses."},
+  {id:2, name:"Hydrangea Elegance Bunch", price:1099, type:"Hydrangea", img:"https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", desc:"Full and lush hydrangea flowers for elegant decor."},
+  {id:3, name:"Cherry Blossom Bouquet", price:1499, type:"Cherry Blossom", img:"https://images.pexels.com/photos/36753/flower-blossom-bloom-nature.jpg", desc:"Delicate cherry blossom artificial bouquet."},
+  {id:4, name:"Calla Lily Set", price:899, type:"Calla Lily", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Long stem calla lilies perfect for special occasions."},
+  {id:5, name:"Carnation & Daisy Mix", price:799, type:"Carnation", img:"https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg", desc:"Cheerful mix of carnations and daisies."},
+  {id:6, name:"Gerbera Gala", price:950, type:"Gerbera", img:"https://images.pexels.com/photos/461428/pexels-photo-461428.jpeg", desc:"Bright and cheerful gerbera flower bouquet."},
+  {id:7, name:"Lavender & Eucalyptus Blend", price:1199, type:"Lavender", img:"https://images.pexels.com/photos/461421/pexels-photo-461421.jpeg", desc:"Relaxing blend of lavender with eucalyptus greenery."},
+  {id:8, name:"Iris & Gardenia Duo", price:1399, type:"Iris", img:"https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg", desc:"Elegant iris and gardenia double bouquet."},
+  {id:9, name:"Poppy Rush Bouquet", price:1299, type:"Poppy", img:"https://images.pexels.com/photos/462353/pexels-photo-462353.jpeg", desc:"Bold and vibrant artificial poppy bouquet."}
 ];
 
 let cart = [];
 
-// Render Products
 const productList = document.getElementById("product-list");
 
+// Render Products
 function renderProducts(list){
   productList.innerHTML = "";
   list.forEach(p => {
@@ -228,20 +227,17 @@ function renderProducts(list){
 }
 renderProducts(products);
 
-// Add to Cart
+// Cart functions
 function addToCart(id){
   const item = products.find(f=>f.id===id);
   cart.push(item);
   updateCart();
   toggleCart(true);
 }
-
-// Toggle Cart
 function toggleCart(open){
   const cartEl = document.getElementById("cart");
   cartEl.classList.toggle("open", open !== undefined ? open : !cartEl.classList.contains("open"));
 }
-
 function updateCart(){
   const list = document.getElementById("cart-items");
   list.innerHTML = "";
@@ -252,14 +248,10 @@ function updateCart(){
   });
   document.getElementById("cart-total").innerText = total;
 }
-
-// Buy Now
 function buyNow(id){
   const item = products.find(f=>f.id===id);
   alert("Thank you for purchasing: " + item.name + "\nPrice: Rs " + item.price);
 }
-
-// Checkout
 function checkout(){
   if(cart.length===0){
     alert("Your cart is empty!");
@@ -271,7 +263,7 @@ function checkout(){
   toggleCart(false);
 }
 
-// Modal
+// Modal functions
 const modal = document.getElementById("modal");
 const modalImg = document.getElementById("modal-img");
 const modalName = document.getElementById("modal-name");
@@ -288,9 +280,7 @@ function openModal(id){
   modalAdd.onclick = ()=>{ addToCart(id); closeModal(); };
   modal.style.display = "flex";
 }
-function closeModal(){
-  modal.style.display = "none";
-}
+function closeModal(){ modal.style.display = "none"; }
 
 // Search & Filter
 const searchInput = document.getElementById("search");
