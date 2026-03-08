@@ -3,207 +3,312 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flower Bouquet Shop</title>
-
+<title>Artificial Flower Shop</title>
 <style>
+  body{
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #fdfdfd;
+  }
+  header{
+      background: #ff6f91;
+      padding: 15px;
+      text-align: center;
+      font-size: 2rem;
+      color: white;
+      font-weight: bold;
+      position: relative;
+  }
+  .search-filter{
+      margin: 10px auto;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+  }
+  .search-filter input, .search-filter select{
+      padding: 7px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+  }
+  .products{
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+      gap: 15px;
+      padding: 20px;
+  }
+  .card{
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+  }
+  .card:hover{
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .card img{
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 5px;
+  }
+  .card h3{
+      margin: 8px 0 4px;
+      font-size: 1.2rem;
+  }
+  .price{
+      color: #2a8fbd;
+      font-size: 1.1rem;
+      margin: 6px 0;
+  }
+  .stars{
+      color: gold;
+      font-size: 1rem;
+  }
+  button{
+      margin: 5px 3px;
+      padding: 8px 10px;
+      border: none;
+      background: #2a8fbd;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: .9rem;
+  }
+  button:hover{
+      background: #236b87;
+  }
+  #cart{
+      position: fixed;
+      top: 60px; right: -300px;
+      width: 300px;
+      height: calc(100% - 60px);
+      background: #fff;
+      border-left: 2px solid #ccc;
+      padding: 15px;
+      transition: 0.3s;
+      overflow-y: auto;
+      z-index: 99;
+  }
+  #cart.open{
+      right: 0;
+  }
+  #cart h3{
+      margin-top:0;
+  }
+  #cart ul{padding:0; list-style:none;}
+  #cart ul li{
+      margin:8px 0;
+      border-bottom: 1px dashed #ccc;
+      padding-bottom:6px;
+  }
+  #cart button{background:#ff6f91;}
 
-body{
-font-family: Arial;
-margin:0;
-background:#fff5f7;
-}
-
-header{
-background:#e91e63;
-color:white;
-padding:20px;
-text-align:center;
-}
-
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-padding:30px;
-}
-
-.card{
-background:white;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
-text-align:center;
-padding:15px;
-}
-
-.card img{
-width:100%;
-height:180px;
-object-fit:cover;
-border-radius:10px;
-}
-
-.card h3{
-margin:10px 0;
-}
-
-button{
-background:#e91e63;
-color:white;
-border:none;
-padding:10px 15px;
-border-radius:5px;
-cursor:pointer;
-}
-
-button:hover{
-background:#c2185b;
-}
-
-.cart{
-background:white;
-padding:20px;
-margin:20px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-.order{
-background:white;
-padding:20px;
-margin:20px;
-border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
-max-width:400px;
-}
-
-input{
-width:100%;
-padding:10px;
-margin:8px 0;
-}
-
+  /* Modal */
+  #modal{
+      display: none;
+      position: fixed;
+      top:0; left:0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+  }
+  #modal .modal-content{
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      text-align: center;
+  }
+  #modal img{
+      width: 100%;
+      border-radius: 5px;
+      margin-bottom: 10px;
+  }
+  #modal h3{
+      margin: 5px 0;
+  }
+  #modal .close{
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+  }
 </style>
 </head>
-
 <body>
 
 <header>
-<h1>🌸 Online Flower Bouquet Shop</h1>
-<p>Order Beautiful Bouquets for Your Loved Ones</p>
+  🌺 Artificial Flower Shop
+  <button onclick="toggleCart()" style="position:absolute; top:12px; right:15px; background:white; color:#ff6f91; border-radius:5px;">🛒 Cart</button>
 </header>
 
-<section class="products">
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946">
-<h3>Rose Bouquet</h3>
-<p>$20</p>
-<button onclick="addCart('Rose Bouquet',20)">Add to Cart</button>
+<div class="search-filter">
+  <input type="text" id="search" placeholder="Search flower...">
+  <select id="filter">
+    <option value="all">All Types</option>
+    <option value="Lily">Lily</option>
+    <option value="Rose">Rose</option>
+    <option value="Lotus">Lotus</option>
+    <option value="Sunflower">Sunflower</option>
+    <option value="Tulip">Tulip</option>
+    <option value="Orchid">Orchid</option>
+    <option value="Marigold">Marigold</option>
+    <option value="Daisy">Daisy</option>
+    <option value="Peony">Peony</option>
+  </select>
 </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6">
-<h3>Lily Bouquet</h3>
-<p>$25</p>
-<button onclick="addCart('Lily Bouquet',25)">Add to Cart</button>
+<div class="products" id="product-list">
+  <!-- Product Cards Injected By JavaScript -->
 </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
-<h3>Sunflower Bouquet</h3>
-<p>$18</p>
-<button onclick="addCart('Sunflower Bouquet',18)">Add to Cart</button>
+<!-- Cart Sidebar -->
+<div id="cart">
+    <h3>Your Cart</h3>
+    <ul id="cart-items"></ul>
+    <p><strong>Total: </strong>Rs <span id="cart-total">0</span></p>
+    <button onclick="checkout()">Checkout</button>
 </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9">
-<h3>Lotus Bouquet</h3>
-<p>$22</p>
-<button onclick="addCart('Lotus Bouquet',22)">Add to Cart</button>
+<!-- Modal -->
+<div id="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modal-img" src="" alt="">
+    <h3 id="modal-name"></h3>
+    <p id="modal-desc"></p>
+    <p class="price" id="modal-price"></p>
+    <button id="modal-add">Add to Cart</button>
+  </div>
 </div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1468327768560-75b778cbb551">
-<h3>Tulips Bouquet</h3>
-<p>$24</p>
-<button onclick="addCart('Tulips Bouquet',24)">Add to Cart</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1496060169243-453fde45943b">
-<h3>Orchid Bouquet</h3>
-<p>$28</p>
-<button onclick="addCart('Orchid Bouquet',28)">Add to Cart</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1504198266285-165a1f9f36ff">
-<h3>Daisy Bouquet</h3>
-<p>$16</p>
-<button onclick="addCart('Daisy Bouquet',16)">Add to Cart</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1493244040629-496f6d136cc3">
-<h3>Lavender Bouquet</h3>
-<p>$19</p>
-<button onclick="addCart('Lavender Bouquet',19)">Add to Cart</button>
-</div>
-
-</section>
-
-<section class="cart">
-<h2>🛒 Shopping Cart</h2>
-<ul id="cartList"></ul>
-<h3>Total: $<span id="total">0</span></h3>
-</section>
-
-<section class="order">
-<h2>📦 Place Order</h2>
-
-<input type="text" id="name" placeholder="Your Name">
-<input type="text" id="address" placeholder="Delivery Address">
-<input type="text" id="phone" placeholder="Phone Number">
-
-<button onclick="placeOrder()">Submit Order</button>
-
-<p id="message"></p>
-
-</section>
 
 <script>
+// 🌸 Flower Products Data
+const products = [
+  {id:1, name:"Lily Bouquet", price:499, type:"Lily", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Fresh artificial lilies, perfect for home decoration."},
+  {id:2, name:"Rose Bundle", price:799, type:"Rose", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Red artificial roses to brighten your day."},
+  {id:3, name:"Lotus Arrangement", price:899, type:"Lotus", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Beautiful lotus flowers for your meditation space."},
+  {id:4, name:"Sunflower Set", price:399, type:"Sunflower", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Bright sunflowers to bring sunshine indoors."},
+  {id:5, name:"Tulip Mix", price:599, type:"Tulip", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Colorful tulip mix, perfect for gifting."},
+  {id:6, name:"Orchid Pack", price:1200, type:"Orchid", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Elegant orchids for office or home."},
+  {id:7, name:"Marigold Garland", price:350, type:"Marigold", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Festive marigold garland for celebrations."},
+  {id:8, name:"Daisy Cluster", price:450, type:"Daisy", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Cheerful daisies to brighten your room."},
+  {id:9, name:"Peony Deluxe", price:1500, type:"Peony", img:"https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg", desc:"Luxurious peonies for special occasions."}
+];
 
-let cart=[]
-let total=0
+let cart = [];
 
-function addCart(name,price){
+// Render Products
+const productList = document.getElementById("product-list");
 
-cart.push(name)
-total+=price
+function renderProducts(list){
+  productList.innerHTML = "";
+  list.forEach(p => {
+    productList.innerHTML += `
+      <div class="card" onclick="openModal(${p.id})">
+        <img src="${p.img}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <div class="stars">★★★★★</div>
+        <div class="price">Rs ${p.price}</div>
+        <button onclick="event.stopPropagation(); addToCart(${p.id})">Add to Cart</button>
+        <button onclick="event.stopPropagation(); buyNow(${p.id})">Buy Now</button>
+      </div>
+    `;
+  });
+}
+renderProducts(products);
 
-let list=document.getElementById("cartList")
-let item=document.createElement("li")
-item.innerText=name+" - $"+price
-list.appendChild(item)
-
-document.getElementById("total").innerText=total
+// Add to Cart
+function addToCart(id){
+  const item = products.find(f=>f.id===id);
+  cart.push(item);
+  updateCart();
+  toggleCart(true);
 }
 
-function placeOrder(){
-
-let name=document.getElementById("name").value
-let address=document.getElementById("address").value
-let phone=document.getElementById("phone").value
-
-if(name==""||address==""||phone==""){
-document.getElementById("message").innerText="Please fill all details"
-return
+// Toggle Cart
+function toggleCart(open){
+  const cartEl = document.getElementById("cart");
+  cartEl.classList.toggle("open", open !== undefined ? open : !cartEl.classList.contains("open"));
 }
 
-document.getElementById("message").innerText=
-"✅ Thank you "+name+"! Your flowers will be delivered soon 🌸"
+function updateCart(){
+  const list = document.getElementById("cart-items");
+  list.innerHTML = "";
+  let total = 0;
+  cart.forEach((item) => {
+    total += item.price;
+    list.innerHTML += `<li>${item.name} - Rs ${item.price}</li>`;
+  });
+  document.getElementById("cart-total").innerText = total;
 }
 
+// Buy Now
+function buyNow(id){
+  const item = products.find(f=>f.id===id);
+  alert("Thank you for purchasing: " + item.name + "\nPrice: Rs " + item.price);
+}
+
+// Checkout
+function checkout(){
+  if(cart.length===0){
+    alert("Your cart is empty!");
+    return;
+  }
+  alert("Order placed!\nTotal: Rs " + document.getElementById("cart-total").innerText);
+  cart = [];
+  updateCart();
+  toggleCart(false);
+}
+
+// Modal
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modal-img");
+const modalName = document.getElementById("modal-name");
+const modalDesc = document.getElementById("modal-desc");
+const modalPrice = document.getElementById("modal-price");
+const modalAdd = document.getElementById("modal-add");
+
+function openModal(id){
+  const product = products.find(p=>p.id===id);
+  modalImg.src = product.img;
+  modalName.innerText = product.name;
+  modalDesc.innerText = product.desc;
+  modalPrice.innerText = "Rs " + product.price;
+  modalAdd.onclick = ()=>{ addToCart(id); closeModal(); };
+  modal.style.display = "flex";
+}
+function closeModal(){
+  modal.style.display = "none";
+}
+
+// Search & Filter
+const searchInput = document.getElementById("search");
+const filterSelect = document.getElementById("filter");
+
+searchInput.addEventListener("input", applyFilter);
+filterSelect.addEventListener("change", applyFilter);
+
+function applyFilter(){
+  const searchTerm = searchInput.value.toLowerCase();
+  const filterType = filterSelect.value;
+  const filtered = products.filter(p=>{
+    const matchSearch = p.name.toLowerCase().includes(searchTerm);
+    const matchType = filterType === "all" || p.type === filterType;
+    return matchSearch && matchType;
+  });
+  renderProducts(filtered);
+}
 </script>
 
 </body>
